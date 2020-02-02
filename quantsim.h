@@ -1,5 +1,5 @@
 #ifndef QUANTSIM_H
-#define QUANTSIM_h
+#define QUANTSIM_H
 
 #include "mat.h"
 
