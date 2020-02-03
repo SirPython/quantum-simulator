@@ -22,5 +22,11 @@ int main(int argc, char **argv) {
     Mat_set(&mat2, 2, 1, 12);
 
     struct Mat product;
-    Mat_mult(&mat1, &mat2, &product);
+    Mat_kronecker(&mat1, &mat2, &product);
+
+    for(int i = 0; i < product.rows; i++) {
+        for(int j = 0; j < product.cols; j++) {
+            printf("(%d, %d) = %f\n", i, j, Mat_get(&product, i, j));
+        }
+    }
 }
