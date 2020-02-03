@@ -58,3 +58,11 @@ void Mat_kronecker(struct Mat *m1, struct Mat *m2, struct Mat *result) {
         }
     }
 }
+
+void Mat_Print(struct Mat *m) {
+    for(int i = 0; i < m->rows; i++) {
+        for(int j = 0; j < m->cols; j++) {
+            printf("(%d, %d) = %f\n", i, j, Mat_get(m, i, j));
+        }
+    }
+}

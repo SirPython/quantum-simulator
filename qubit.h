@@ -15,22 +15,20 @@ struct Qubit {
 void Qubit_init(struct Qubit *q, int val);
 
 /**
- * Gates will not return the result nor store the result elsewhere because
- * gates modify their input qubits; the operation is being done ON the qubit.
+ * Apply a gate to a qubit.
+ *
+ * The qubit itself IS modified because that's how quantum operations work.
  */
-void identity(struct Qubit *q);
-void negation(struct Qubit *q);
-void cnot(struct Qubit *q);
-void hadamard(struct Qubit *q);
+void Qubit_apply(struct Qubit *q, struct Gate *g);
 
 /**
  * Quantum measurement: returns the likelihood of a collapse to zero
  */
-double qmeasure(struct Qubit *q);
+double Qubit_qmeasure(struct Qubit *q);
 
 /**
  * Classical measurement: collapses the qubit
  */
-bool cmeasure(struct Qubit *c);
+bool Qubit_cmeasure(struct Qubit *q);
 
 #endif

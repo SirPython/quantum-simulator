@@ -13,4 +13,6 @@ void Mat_set(struct Mat *m, int row, int col, double val);
 void Mat_dot(struct Mat *m1, struct Mat *m2, struct Mat *result);
 void Mat_kronecker(struct Mat *m1, struct Mat *m2, struct Mat *result);
 
+void Mat_print();
+
 #endif
