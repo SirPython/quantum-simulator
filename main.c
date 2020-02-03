@@ -1,8 +1,12 @@
 #include "quantsim.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 int main(int argc, char **argv) {
+    srand(time(NULL));
+
     struct Mat mat1;
     Mat_init(&mat1, 2, 3);
     Mat_set(&mat1, 0, 0, 1);

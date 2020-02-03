@@ -1,6 +1,8 @@
 #ifndef QUBIT_H
 #define QUBIT_H
 
+#include <stdbool.h>
+
 struct Qubit {
     struct Mat m;
 };
@@ -18,5 +20,15 @@ void identity(struct Qubit *q);
 void negation(struct Qubit *q);
 void cnot(struct Qubit *q);
 void hadamard(struct Qubit *q);
+
+/**
+ * Quantum measurement: returns the likelihood of a collapse to zero
+ */
+double qmeasure(struct Qubit *q);
+
+/**
+ * Classical measurement: collapses the qubit
+ */
+bool cmeasure(struct Qubit *c);
 
 #endif
