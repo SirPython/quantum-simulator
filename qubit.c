@@ -1,7 +1,7 @@
 #include "qubit.h"
 
 #include <stdbool.h>
-#incluce <stdlib.h>
+#include <stdlib.h>
 
 void Qubit_init(struct Qubit *q, int val) {
     struct Mat m;
@@ -12,7 +12,7 @@ void Qubit_init(struct Qubit *q, int val) {
 }
 
 double qmeasure(struct Qubit *q) {
-    double root_zero_odds = Mat_get(q.m, 0, 0);
+    double root_zero_odds = Mat_get(&q->m, 0, 0);
 
     return root_zero_odds * root_zero_odds;
 }

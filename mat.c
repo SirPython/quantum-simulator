@@ -42,14 +42,15 @@ void Mat_kronecker(struct Mat *m1, struct Mat *m2, struct Mat *result) {
 
     for(int i = 0; i < m1->rows; i++) {
         for(int j = 0; j < m1->cols; j++) {
+            int row_offset = i * m2->rows;
+            int col_offset = j * m2->cols;
+
             for(int k = 0; k < m2->rows; k++) {
                 for(int l = 0; l < m2->cols; l++) {
-                    // Iw + Jx + Ky + Lz = ?
-                    // Iw + (J * m1->cols) + Ky + L
                     Mat_set(
                         result,
-                        (i * m1->rows) + k,
-                        (j * m1->cols) + l,
+                        (i * m2->rows) + k,
+                        (j * m2->cols) + l,
                         Mat_get(m1, i, j) * Mat_get(m2, k, l)
                     );
                 }

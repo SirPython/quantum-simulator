@@ -1,6 +1,8 @@
 #ifndef QUBIT_H
 #define QUBIT_H
 
+#include "mat.h"
+
 #include <stdbool.h>
 
 struct Qubit {
