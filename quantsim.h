@@ -2,5 +2,6 @@
 #define QUANTSIM_H
 
 #include "mat.h"
+#include "qubit.h"
 
 #endif
