@@ -28,3 +28,8 @@ int main(int argc, char **argv) {
 
     printf("%f\n", sqrt(-1));
 }
+
+/**
+ * Watch out for memory issues... I feel like there's gonna need to be a lot
+ * of garbaet collection.
+ */

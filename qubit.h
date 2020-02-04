@@ -6,30 +6,30 @@
 
 #include <stdbool.h>
 
-struct Qubit {
-    struct Mat mat;
-};
+/**
+ * A qubit (? or qubit register?) is just a vector.
+ */
 
 /**
  * val is either 0 or 1 to denote in which index the 1 will be
  */
-void Qubit_init(struct Qubit *q, int val);
+void Qubit_init(struct Mat *mat, int val);
 
 /**
- * Apply a gate to a qubit.
+ * Apply a gate to a qubit/qubit register?
  *
  * The qubit itself IS modified because that's how quantum operations work.
  */
-//void Qubit_apply(struct Qubit *q, struct Mat *gate);
+void Qubit_apply(struct Qubit *q, struct Mat *gate);
 
 /**
  * Quantum measurement: returns the likelihood of a collapse to zero
  */
-double Qubit_qmeasure(struct Qubit *q);
+double Qubit_qmeasure(struct Mat *mat);
 
 /**
  * Classical measurement: collapses the qubit
  */
-bool Qubit_cmeasure(struct Qubit *q);
+bool Qubit_cmeasure(struct Mat *mat);
 
 #endif
