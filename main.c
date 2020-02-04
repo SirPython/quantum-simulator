@@ -31,5 +31,5 @@ int main(int argc, char **argv) {
 
 /**
  * Watch out for memory issues... I feel like there's gonna need to be a lot
- * of garbaet collection.
+ * of garbage collection.
  */

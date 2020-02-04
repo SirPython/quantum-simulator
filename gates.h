@@ -14,8 +14,8 @@ struct Mat pauli_x = {
 struct Mat hadamard = {
     2,2,
     (double []) {
-        sqrt(1/2), sqrt(1/2),
-        sqrt(1/2), -sqrt(1/2)
+        0.7071067812, 0.7071067812,
+        0.7071067812, -0.7071067812
     }
 };
 
