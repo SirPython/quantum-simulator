@@ -16,19 +16,12 @@
 // a scalable identity matrix with the kronecker product to change the size
 // of the gate
 
-struct Mat pauli_x = {
+static struct Mat pauli_x = {
     2,2,
-    (double[4]){
+    (double[]){
         0, 1,
         1, 0
     }
-};
-
-struct {
-    char symbol;
-    struct Mat mat;
-} GateLookup[] = {
-    'X', pauli_x
 };
 
 #endif
