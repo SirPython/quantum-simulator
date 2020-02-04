@@ -4,7 +4,7 @@
 struct Mat {
     int rows;
     int cols;
-    double data[];
+    double *data;
 };
 
 void Mat_init(struct Mat *mat, int rows, int cols);
