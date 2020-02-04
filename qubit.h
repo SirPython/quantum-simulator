@@ -2,11 +2,12 @@
 #define QUBIT_H
 
 #include "mat.h"
+#include "gates.h"
 
 #include <stdbool.h>
 
 struct Qubit {
-    struct Mat m;
+    struct Mat mat;
 };
 
 /**

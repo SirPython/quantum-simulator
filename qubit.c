@@ -4,37 +4,26 @@
 #include <stdlib.h>
 
 void Qubit_init(struct Qubit *q, int val) {
-    struct Mat m;
-    Mat_init(&m, 2, 1);
-    Mat_set(&m, val, 0, 1);
+    struct Mat mat;
+    Mat_init(&mat, 2, 1);
+    Mat_set(&mat, val, 0, 1);
 
-    q->m = m;
-}
-
-void identity(struct Qubit *c) {
-    static struct Mat m = {
-        2,2
-        1, 0
-        0, 1
-    };
-
-    struct Qubit *placeholder;
+    q->mat = mat;
 }
 
 void Qubit_apply(struct Qubit *q, struct Gate *g) {
     struct Qubit *placeholder;
 
-    struct Mat *q_mat = &q->m;
-    struct Mat *g_mat = &g->m;
-
     struct Mat result;
-    Mat_dot(q_mat, g_mat, &result);
+    Mat_dot(&q->mat, &g->mat, &result);
 
-    *q = result;
+    placeholder->mat = result;
+
+    *q = placeholder;
 }
 
 double Qubit_qmeasure(struct Qubit *q) {
-    double root_zero_odds = Mat_get(&q->m, 0, 0);
+    double root_zero_odds = Mat_get(&q->mat, 0, 0);
 
     return root_zero_odds * root_zero_odds;
 }

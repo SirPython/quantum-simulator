@@ -5,32 +5,32 @@
  * The name field is used for lookup; when interpreting quantsim code, the
  * symbols will be used and will be corresponded to the gate functions here.
  */
-static struct Gate {
+struct Gate {
     char symbol;
-    struct Mat m;
+    struct Mat mat;
 };
 
-static struct Gate identity = {
-    "I",
+struct Gate identity = {
+    'I',
     {
         2,2,
 
-        1, 0,
-        0, 1
+        {1, 0,
+        0, 1}
     }
 };
 
-static struct Gate negation = {
-    "N",
+struct Gate negation = {
+    'N',
     {
         2,2,
 
-        0, 1,
-        1, 0
+        {0, 1,
+        1, 0}
     }
-}
+};
 
-extern struct Gate Gates[] = {
+struct Gate Gates[] = {
     identity,
     negation
 };
