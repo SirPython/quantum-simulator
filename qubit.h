@@ -2,7 +2,6 @@
 #define QUBIT_H
 
 #include "mat.h"
-#include "gates.h"
 
 #include <stdbool.h>
 

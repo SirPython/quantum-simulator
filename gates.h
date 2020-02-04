@@ -1,8 +1,6 @@
 #ifndef GATES_H
 #define GATES_H
 
-#include <math.h>
-
 struct Mat pauli_x = {
     2,2,
     (double[]){

@@ -3,5 +3,6 @@
 
 #include "mat.h"
 #include "qubit.h"
+#include "gates.h"
 
 #endif

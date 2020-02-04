@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <math.h>
 
 int main(int argc, char **argv) {
     srand(time(NULL));
@@ -25,8 +24,6 @@ int main(int argc, char **argv) {
     Mat_dot(&neg, &zero, &prod);
 
     Mat_print(&prod);
-
-    printf("%f\n", sqrt(-1));
 }
 
 /**
