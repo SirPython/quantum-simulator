@@ -12,7 +12,7 @@ struct Mat pauli_x = {
 struct Mat hadamard = {
     2,2,
     (double []) {
-        0.7071067812, 0.7071067812,
+        0.7071067812, 0.7071067812, /* TODO: maybe leave the roots unevaluated*/
         0.7071067812, -0.7071067812
     }
 };

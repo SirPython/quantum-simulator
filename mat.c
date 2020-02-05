@@ -63,3 +63,17 @@ void Mat_print(struct Mat *mat) {
         }
     }
 }
+
+void generate_identity(int size, struct Mat *result) {
+    Mat_init(result, size, size);
+
+    for(int i = 0; i < size; i++) {
+        for(int j = 0; j < size; j++) {
+            if(j == i) {
+                Mat_set(result, i, i, 1);
+                continue;
+            }
+            Mat_set(result, i, j, 0);
+        }
+    }
+}
