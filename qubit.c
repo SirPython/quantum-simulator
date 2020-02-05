@@ -9,16 +9,21 @@ void Qubit_init(struct Mat *qubit, int val) {
 }
 
 void Qubit_apply(struct Mat *qubit, struct Mat *gate) {
-    /*struct Qubit placeholder;
+    struct Mat scaled_gate;
 
-    struct Mat result;
-    Mat_dot(&q->mat, &g->mat, &result);
+    if(qubit->rows > 2) {
+        struct Mat identity;
+        generate_identity(qubit->rows, &identity);
 
-    placeholder.mat = result;
+        Mat_kronecker(gate, &identity, &scaled_gate);
+    } else {
+        scaled_gate = *gate;
+    }
 
-    *q = placeholder;*/
+    struct Mat output;
+    Mat_dot(qubit, &scaled_gate, &output);
 
-    // needs to scale size of gate with identity matrix
+    *qubit = output;
 }
 
 double Qubit_qmeasure(struct Mat *qubit) {
