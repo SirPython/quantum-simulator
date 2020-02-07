@@ -11,7 +11,7 @@ void Qubit_init(struct Mat *qubit, int val) {
 void Qubit_apply(struct Mat *qubit, struct Mat *gate) {
     struct Mat scaled_gate;
 
-    if(qubit->rows > 2) {
+    if(qubit->rows > 2) { // maybe instead it's if the gate rows and qubit rows don't match? think of cnot and swap
         struct Mat identity;
         generate_identity(qubit->rows, &identity);
 
