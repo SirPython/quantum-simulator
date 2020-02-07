@@ -3,47 +3,77 @@
 
 #include <complex.h>
 
-#define GATE(name, v1, v2, v3, v4) struct Mat name = { \
-    2,2, \
-    (double []) { \
-        v1, v2, \
-        v3, v4 \
-    } \
-};
+#define UNARY_GATE(name,v1,v2,v3,v4) \
+    struct Mat name = { \
+        2,2, \
+        (double []) { \
+            v1, v2, \
+            v3, v4 \
+        } \
+    };
 
-GATE(hadamard,
+#define BINARY_GATE(name,v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12,v13,v14,v15,v16) \
+    struct Mat name = { \
+        4,4, \
+        (double []) { \
+            v1,v2,v3,v4, \
+            v5,v6,v7,v8, \
+            v9,v10,v11,v12, \
+            v13,v14,v15,v16 \
+        } \
+    };
+
+UNARY_GATE(hadamard,
     7071067812, 7071067812,
     7071067812,-7071067812
 );
 
-GATE(pauli_x,
+UNARY_GATE(pauli_x,
     0, 1,
     1, 0
 );
 
-GATE(pauli_y,
+BINARY_GATE(c_pauli_x,
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 0, 0, 1,
+    0, 0, 1, 0
+);
+
+UNARY_GATE(pauli_y,
     0, -I,
     I, 0
 );
 
-GATE(pauli_z,
+BINARY_GATE(c_pauli_y,
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 0, 0, -I,
+    0, 0, I, 0
+);
+
+UNARY_GATE(pauli_z,
     1, 0,
     0, -1
 );
 
-GATE(root_not,
+BINARY_GATE(c_pauli_z,
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 0, 1, 0,
+    0, 0, 0, -1
+);
+
+UNARY_GATE(root_not,
     0.5 * (1 + I), 0.5 * (1 - I),
     0.5 * (1 - I), 0.5 * (1 + I)
 );
 
-struct Mat swap = {
-    4,4,
-    (double[]) {
-        1, 0, 0, 0,
-        0, 0, 1, 0,
-        0, 1, 0, 0,
-        0, 0, 0, 1
-    }
-};
+BINARY_GATE(swap,
+    1, 0, 0, 0,
+    0, 0, 1, 0,
+    0, 1, 0, 0,
+    0, 0, 0, 1
+)
 
 #endif
