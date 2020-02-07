@@ -7,10 +7,7 @@
 int main(int argc, char **argv) {
     srand(time(NULL));
 
-    struct Mat identity;
-    generate_identity(4, &identity);
-
-    Mat_print(&identity);
+    
 }
 
 /**
