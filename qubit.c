@@ -1,7 +1,4 @@
-#include "qubit.h"
-
-#include <stdbool.h>
-#include <stdlib.h>
+#include "quantsim.h"
 
 void Qubit_init(struct Mat *qubit) {
     Mat_init(qubit, 2, 1);

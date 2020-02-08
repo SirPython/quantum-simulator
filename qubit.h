@@ -1,9 +1,7 @@
 #ifndef QUBIT_H
 #define QUBIT_H
 
-#include "mat.h"
-
-#include <stdbool.h>
+#include "quantsim.h"
 
 /**
  * A qubit (? or qubit register?) is just a vector.

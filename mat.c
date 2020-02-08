@@ -1,7 +1,4 @@
-#include "mat.h"
-
-#include <stdlib.h>
-#include <stdio.h>
+#include "quantsim.h"
 
 void Mat_init(struct Mat *mat, int rows, int cols) {
     mat->rows = rows;

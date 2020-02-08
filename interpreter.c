@@ -1,11 +1,8 @@
-#include "interpreter.h"
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "quantsim.h"
 
 void interpret(char *in, FILE *out) {
     /* First number is # of qubits */
-    long num_qubits = strtol(in, in, 10);
+    long num_qubits = strtol(in, &in, 10);
     struct Mat    qubits[num_qubits];
     char **line_pointers[num_qubits];
 
