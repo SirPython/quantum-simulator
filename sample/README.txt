@@ -7,6 +7,8 @@ inside to indicate which other qubit is being affected (0-index, from the top)
 - In running, gates that line up "vertically" will be run "simultaneously."
 Vertically as in: two gates that are both the nth gate in their row will be
 treated as running as the same time -- except measurement.
+- The first line of the source file must indicate the number of qubit registers
+being used.
 
 Gates are as follows:
 H - hadamard

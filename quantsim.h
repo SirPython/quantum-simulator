@@ -4,5 +4,6 @@
 #include "mat.h"
 #include "qubit.h"
 #include "gates.h"
+#include "interpreter.h"
 
 #endif

@@ -10,9 +10,9 @@
  */
 
 /**
- * val is either 0 or 1 to denote in which index the 1 will be
+ * Initializes to a 0 state
  */
-void Qubit_init(struct Mat *qubit, int val);
+void Qubit_init(struct Mat *qubit);
 
 /**
  * Apply a gate to a qubit/qubit register?

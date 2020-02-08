@@ -10,7 +10,10 @@ int main(int argc, char **argv) {
     FILE *in = fopen("./sample/sample.quantsim", "r");
     FILE *out = stdout;
 
-    interpret(in, out);
+    char *source;
+    load_file(in, &source);
+
+    interpret(source, out);
 
     return 0;
 }
