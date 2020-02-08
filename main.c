@@ -7,7 +7,12 @@
 int main(int argc, char **argv) {
     srand(time(NULL));
 
-    
+    FILE *in = fopen("./sample/sample.quantsim", "r");
+    FILE *out = stdout;
+
+    interpret(in, out);
+
+    return 0;
 }
 
 /**
