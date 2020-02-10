@@ -6,6 +6,7 @@
 #include <time.h>
 #include <stdbool.h>
 #include <complex.h>
+#include <string.h>
 
 #include "mat.h"
 #include "qubit.h"

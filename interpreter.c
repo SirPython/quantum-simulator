@@ -1,7 +1,7 @@
 #include "quantsim.h"
 
 void interpret(char *in, FILE *out) {
-    int num_qubits;
+    long num_qubits;
     struct Mat *qubits;
     char **line_pointers;
     initialize(in, &num_qubits, &qubits, &line_pointers);
@@ -9,9 +9,9 @@ void interpret(char *in, FILE *out) {
     /* Will hold each column's gates as they are encountered */
     char **gates;
     while(1) {
-        for(i = 0; i < num_qubits; i++) {
+        for(int i = 0; i < num_qubits; i++) {
             char *gate;
-            read_next_gate_exp((*line_pointers)[i], &gate);
+            read_next_gate_exp(&(line_pointers[i]), &gate);
 
             // Now the gate exp needs to be split into the gate itself
             // and the operands it acts upon (if any)
@@ -25,7 +25,7 @@ void interpret(char *in, FILE *out) {
         /* If any of the lines have no more symbols encountered (whether thats
          * a gate or simply a placeholder _ ), then it can be assumed the
          * program has ended. */
-        if(strcmp((*gates)[0], "")) { // can this be shortened?
+        if(strcmp((gates)[0], "")) { // can this be shortened?
             break;
         }
     }
@@ -33,11 +33,13 @@ void interpret(char *in, FILE *out) {
     // TODO free memory
 }
 
-void initialize(char *in, struct Mat **qubits, char ***line_pointers) {
+void initialize(char *in, long *num_qubits, struct Mat **qubits, char ***line_pointers) {
     /* First # is # of qubits */
-    long num_qubits = strtol(in, &in, 10); // I LOVE this function
-    *qubits        = malloc(num_qubits * sizeof(struct Mat));
-    *line_pointers = malloc(num_qubits * sizeof(char *));
+    long num = strtol(in, &in, 10); // I LOVE this function
+
+    *num_qubits    = num;
+    *qubits        = malloc(num * sizeof(struct Mat));
+    *line_pointers = malloc(num * sizeof(char *));
 
     int i = 0;
     /* We iterate through the string as opposed to just initializing 5 qubits
@@ -74,7 +76,7 @@ void read_next_gate_exp(char **stream, char **out) {
     size_t size = (size_t)(end - start);
     *out = malloc(size + 1); // +1 for '\0'
 
-    memcpy(*out, *start, size);
+    memcpy(*out, start, size);
     (*out)[size] = '\0';
 }
 
