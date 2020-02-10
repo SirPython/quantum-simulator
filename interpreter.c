@@ -9,9 +9,21 @@ void interpret(char *in, FILE *out) {
     /* Will hold each column's gates as they are encountered */
     char **gates;
     while(1) {
+        // TODO I think spaces should be ignored. Only uppercase letters and
+        // things inside parentheses matter.
+        // X H Cx   (  2) == XHCx(2)
         for(int i = 0; i < num_qubits; i++) {
-            char *gate;
-            read_next_gate_exp(&(line_pointers[i]), &gate);
+            char *gate_exp;
+            read_next_gate_exp(&(line_pointers[i]), &gate_exp);
+
+            struct Mat gate;
+            parse_gate(gate_exp, &gate);
+
+            /* I imagine if it's not in the first 3 bytes, it's not there. */
+            if(memchr(gate_exp, '(', 3) != NULL) {
+                int *operands;
+                parse_operands(gate_exp, &operands);
+            }
 
             // Now the gate exp needs to be split into the gate itself
             // and the operands it acts upon (if any)
@@ -58,6 +70,9 @@ void initialize(char *in, long *num_qubits, struct Mat **qubits, char ***line_po
     }
 }
 
+
+// TODO: for this and related functions, there's definitely a more idiomatic
+// way to isolate a SUBSTRING.
 void read_next_gate_exp(char **stream, char **out) {
     /* Skips past the spaces */
     for(;
@@ -71,13 +86,32 @@ void read_next_gate_exp(char **stream, char **out) {
         **stream != ' ' && **stream != '\0' && **stream != '\n';
         *stream = *stream + 1
     ); // this doesn't allow spaces in gate operands.. maybe change
-    char *end = *stream;
 
-    size_t size = (size_t)(end - start);
+    size_t size = (size_t)(*stream - start);
     *out = malloc(size + 1); // +1 for '\0'
 
     memcpy(*out, start, size);
     (*out)[size] = '\0';
+}
+
+void parse_gate(char *gate_exp, struct Mat *gate) {
+    char *start = gate_exp;
+    for(;
+        *gate_exp != '\0' && *gate_exp != '(' && *gate_exp != ' ';
+        gate_exp++
+    );
+
+    size_t size = (size_t)(gate_exp - start);
+    char *gate_str = malloc(size + 1); // +1 for '\0'
+
+    memcpy(gate_str, start, size);
+    gate_str[size] = '\0';
+
+
+}
+
+void parse_operands(char *gate_exp, int **operands) {
+    
 }
 
 void load_file(FILE *fp, char **out) {
