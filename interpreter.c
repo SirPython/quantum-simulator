@@ -13,8 +13,7 @@ void interpret(char *in, FILE *out) {
             char *gate_exp;
             read_next_gate_exp(&(line_pointers[i]), &gate_exp);
 
-            struct Mat gate;
-            parse_gate(gate_exp, &gate);
+            struct Mat *gate = parse_gate(gate_exp);
 
             /* I imagine if it's not in the first 3 bytes, it's not there. */
             if(memchr(gate_exp, '(', 3) != NULL) {
@@ -83,20 +82,25 @@ void read_next_gate_exp(char **stream, char **out) {
     (*out)[size] = '\0';
 }
 
-void parse_gate(char *gate_exp, struct Mat *gate) {
-    char *start = gate_exp;
-    for(;
-        *gate_exp != '\0' && *gate_exp != '(' && *gate_exp != ' ';
-        gate_exp++
-    );
+struct Mat *parse_gate(char *gate_exp) {
+    /* All gates will either be a single capital letter of a capital followed
+     * by a lowercase letter. */
 
-    size_t size = (size_t)(gate_exp - start);
-    char *gate_str = malloc(size + 1); // +1 for '\0'
+     char *gate_str = malloc(3);
 
-    memcpy(gate_str, start, size);
-    gate_str[size] = '\0';
+     /* Capital followed by lowercase */
+     if(IS_LOWER(gate_exp[1])) {
+         gate_str[0] = gate_exp[0];
+         gate_str[1] = gate_exp[1];
+         gate_str[2] = '\0';
+     }
+     /* A single capital letter  */
+     else {
+         gate_str[0] = gate_exp[0];
+         gate_str[1] = '\0';
+     }
 
-
+     return gate_lookup(gate_str);
 }
 
 void parse_operands(char *gate_exp, int **operands) {

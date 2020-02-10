@@ -26,4 +26,6 @@
         } \
     };
 
+struct Mat *gate_lookup(char *gate_str);
+
 #endif

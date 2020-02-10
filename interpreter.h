@@ -5,6 +5,7 @@
 
 #define IS_GATE(a) (a == '_' || (a >= 'A' && a <= 'Z'))
 #define IS_END(a) (a == '\0' || a == '\n')
+#define IS_LOWER(a) (a >= 'a' && a <= 'z')
 
 /**
  * Procedure:
@@ -25,7 +26,7 @@ void initialize(char *in, long *num_qubits, struct Mat **qubits, char ***line_po
  */
 void read_next_gate_exp(char **stream, char **out);
 
-void parse_gate(char *gate_exp, struct Mat *gate);
+struct Mat *parse_gate(char *gate_exp);
 void parse_operands(char *gate_exp, int **operands);
 
 void load_file(FILE *fp, char **out);
