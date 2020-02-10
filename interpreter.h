@@ -3,6 +3,9 @@
 
 #include "quantsim.h"
 
+#define IS_GATE(a) (a == '_' || (a >= 'A' && a <= 'Z'))
+#define IS_END(a) (a == '\0' || a == '\n')
+
 /**
  * Procedure:
  * 1. Count the number of lines

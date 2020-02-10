@@ -9,9 +9,6 @@ void interpret(char *in, FILE *out) {
     /* Will hold each column's gates as they are encountered */
     char **gates;
     while(1) {
-        // TODO I think spaces should be ignored. Only uppercase letters and
-        // things inside parentheses matter.
-        // X H Cx   (  2) == XHCx(2)
         for(int i = 0; i < num_qubits; i++) {
             char *gate_exp;
             read_next_gate_exp(&(line_pointers[i]), &gate_exp);
@@ -24,14 +21,6 @@ void interpret(char *in, FILE *out) {
                 int *operands;
                 parse_operands(gate_exp, &operands);
             }
-
-            // Now the gate exp needs to be split into the gate itself
-            // and the operands it acts upon (if any)
-            // the operands can be delivered in a list of ints.
-
-            //int operands[];
-            //get_operands(gate, &operands;
-            //for(# of operands) qubits[operands[i]]
         }
 
         /* If any of the lines have no more symbols encountered (whether thats
@@ -74,18 +63,18 @@ void initialize(char *in, long *num_qubits, struct Mat **qubits, char ***line_po
 // TODO: for this and related functions, there's definitely a more idiomatic
 // way to isolate a SUBSTRING.
 void read_next_gate_exp(char **stream, char **out) {
-    /* Skips past the spaces */
+    /* Get to the next gate */
     for(;
-        **stream == ' ' && **stream != '\0' && **stream != '\n';
+        !IS_GATE(**stream) && !IS_END(**stream);
         *stream = *stream + 1
     );
     char *start = *stream;
 
-    /* Skips UNTIL there are spaces */
+    /* Get to the start of the next gate, or the end of the code. */
     for(;
-        **stream != ' ' && **stream != '\0' && **stream != '\n';
+        !IS_GATE(**stream) && !IS_END(**stream);
         *stream = *stream + 1
-    ); // this doesn't allow spaces in gate operands.. maybe change
+    );
 
     size_t size = (size_t)(*stream - start);
     *out = malloc(size + 1); // +1 for '\0'
@@ -111,7 +100,7 @@ void parse_gate(char *gate_exp, struct Mat *gate) {
 }
 
 void parse_operands(char *gate_exp, int **operands) {
-    
+
 }
 
 void load_file(FILE *fp, char **out) {
