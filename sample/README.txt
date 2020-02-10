@@ -9,6 +9,8 @@ Vertically as in: two gates that are both the nth gate in their row will be
 treated as running as the same time -- except measurement.
 - The first line of the source file must indicate the number of qubit registers
 being used.
+- If a qubit is being affected by another register's binary gate, simply
+leave an _ instead of a command in the same "column"
 
 Gates are as follows:
 H - hadamard

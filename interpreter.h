@@ -11,6 +11,17 @@
  */
 void interpret(char *in, FILE *out);
 
+void initialize(char *in, struct Mat **qubits, char ***line_pointers);
+
+/**
+ * Advances *stream to the end of the gate. TODO: maybe copy strol's design
+ * and accept a separate pointer to be adjusted to the end of the gate
+ * expression (includes parentheses with operands inside)
+ *
+ * *out is modified to hold the full gate expression.
+ */
+void read_next_gate(char **stream, char **out);
+
 void load_file(FILE *fp, char **out);
 
 #endif
