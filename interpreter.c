@@ -1,11 +1,36 @@
 #include "quantsim.h"
 
 void interpret(char *in, FILE *out) {
+    int num_qubits;
     struct Mat *qubits;
     char **line_pointers;
-    initialize(in, &qubits, &line_pointers);
+    initialize(in, &num_qubits, &qubits, &line_pointers);
 
-    
+    /* Will hold each column's gates as they are encountered */
+    char **gates;
+    while(1) {
+        for(i = 0; i < num_qubits; i++) {
+            char *gate;
+            read_next_gate_exp((*line_pointers)[i], &gate);
+
+            // Now the gate exp needs to be split into the gate itself
+            // and the operands it acts upon (if any)
+            // the operands can be delivered in a list of ints.
+
+            //int operands[];
+            //get_operands(gate, &operands;
+            //for(# of operands) qubits[operands[i]]
+        }
+
+        /* If any of the lines have no more symbols encountered (whether thats
+         * a gate or simply a placeholder _ ), then it can be assumed the
+         * program has ended. */
+        if(strcmp((*gates)[0], "")) { // can this be shortened?
+            break;
+        }
+    }
+
+    // TODO free memory
 }
 
 void initialize(char *in, struct Mat **qubits, char ***line_pointers) {
@@ -15,6 +40,8 @@ void initialize(char *in, struct Mat **qubits, char ***line_pointers) {
     *line_pointers = malloc(num_qubits * sizeof(char *));
 
     int i = 0;
+    /* We iterate through the string as opposed to just initializing 5 qubits
+     * because we need the line_pointers to point to the start of each line. */
     while(*in != '\0') {
         if(*in == '\n') {
             struct Mat qubit;
@@ -29,10 +56,19 @@ void initialize(char *in, struct Mat **qubits, char ***line_pointers) {
     }
 }
 
-void read_next_gate(char **stream, char **out) {
-    for(; **stream == ' '; *stream = *stream + 1);
+void read_next_gate_exp(char **stream, char **out) {
+    /* Skips past the spaces */
+    for(;
+        **stream == ' ' && **stream != '\0' && **stream != '\n';
+        *stream = *stream + 1
+    );
     char *start = *stream;
-    for(; **stream != ' '; *stream = *stream + 1); // this doesn't allow spaces in gate operands.. maybe change
+
+    /* Skips UNTIL there are spaces */
+    for(;
+        **stream != ' ' && **stream != '\0' && **stream != '\n';
+        *stream = *stream + 1
+    ); // this doesn't allow spaces in gate operands.. maybe change
     char *end = *stream;
 
     size_t size = (size_t)(end - start);

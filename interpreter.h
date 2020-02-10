@@ -11,7 +11,7 @@
  */
 void interpret(char *in, FILE *out);
 
-void initialize(char *in, struct Mat **qubits, char ***line_pointers);
+void initialize(char *in, int *num_qubits, struct Mat **qubits, char ***line_pointers);
 
 /**
  * Advances *stream to the end of the gate. TODO: maybe copy strol's design
@@ -20,7 +20,7 @@ void initialize(char *in, struct Mat **qubits, char ***line_pointers);
  *
  * *out is modified to hold the full gate expression.
  */
-void read_next_gate(char **stream, char **out);
+void read_next_gate_exp(char **stream, char **out);
 
 void load_file(FILE *fp, char **out);
 
