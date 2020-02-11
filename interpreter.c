@@ -97,12 +97,13 @@ struct Mat *parse_gate(char *gate_exp) {
 void parse_operands(char *gate_exp, int **operands) {
     SKIP_WHILE(gate_exp, *gate_exp != '(')
 
-    while(*gate_exp != ')') {
+    /* First number in argument list is # of arguments */
+    int num_operands = (int)strtol(gate_exp, &gate_exp, 10); // TODO don't need this
+    *operands = malloc(sizeof(int) * num_operands);
+
+    for(int i = 0; i < num_operands; i++) {
         SKIP_WHILE(gate_exp, !IS_NUMBER(*gate_exp))
-
-        //int id = (int)strtol(gate_exp, gate_exp, 10);
-
-        // gate_exp++; ??
+        (*operands)[i] = (int)strtol(gate_exp, &gate_exp, 10);
     }
 }
 
