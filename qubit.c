@@ -5,11 +5,12 @@ void Qubit_init(struct Mat *qubit) {
     Mat_set(qubit, 0, 0, 1);
 }
 
-void Qubit_apply(struct Mat *gate, int num_qubits, ...) {
+void Qubit_apply(struct Mat *gate, struct Mat *out_qubit, int num_qubits, ...) {
     va_list qubits;
     struct Mat scaled_gate;
     struct Mat combined_qubit = va_arg(qubits, struct Mat);
 
+    /* Combine the operand qubits */
     for(; num_qubits-1 > 0; num_qubits--) {
         struct Mat qubit = va_arg(qubits, struct Mat);
         struct Mat new;
@@ -20,9 +21,10 @@ void Qubit_apply(struct Mat *gate, int num_qubits, ...) {
 
     va_end(qubits);
 
-    if(qubit->rows > 2) { // TODO maybe instead it's if the gate rows and qubit rows don't match? think of cnot and swap
+    /* Scale the gate to match the size of the combined operand qubits */
+    if(combined_qubit.rows > gate->rows) {
         struct Mat identity;
-        generate_identity(qubit->rows, &identity);
+        generate_identity(combined_qubit.rows, &identity);
 
         Mat_kronecker(gate, &identity, &scaled_gate);
     } else {
@@ -30,9 +32,9 @@ void Qubit_apply(struct Mat *gate, int num_qubits, ...) {
     }
 
     struct Mat output;
-    Mat_dot(combined_qubit, &scaled_gate, &output);
+    Mat_dot(&combined_qubit, &scaled_gate, &output);
 
-    *qubit = output;
+    *out_qubit = output;
 }
 
 double Qubit_qmeasure(struct Mat *qubit) {

@@ -17,8 +17,10 @@ void Qubit_init(struct Mat *qubit);
  *
  * The qubit itself IS modified because that's how quantum operations work.
  */
-void Qubit_apply(struct Mat *gate, int num_qubits, ...);
-/**
+
+
+void Qubit_apply(struct Mat *gate, struct Mat *out_qubit, int num_qubits, ...);
+ /**
  * Quantum measurement: returns the likelihood of a collapse to zero
  */
 double Qubit_qmeasure(struct Mat *qubit);

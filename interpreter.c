@@ -98,9 +98,9 @@ void parse_operands(char *gate_exp, int **operands) {
     SKIP_WHILE(gate_exp, *gate_exp != '(')
 
     while(*gate_exp != ')') {
-        SKIP_WHILE(!IS_NUMBER(*gate_exp), gate_exp)
+        SKIP_WHILE(gate_exp, !IS_NUMBER(*gate_exp))
 
-        int id = (int)strtol(gate_exp, gate_exp, 10);
+        //int id = (int)strtol(gate_exp, gate_exp, 10);
 
         // gate_exp++; ??
     }
