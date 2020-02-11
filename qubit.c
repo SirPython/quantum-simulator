@@ -19,6 +19,8 @@ void Qubit_apply(struct Mat *gate, struct Mat *out_qubit, int num_qubits, ...) {
         combined_qubit = new;
     }
 
+// oh do you decide the length of a register beforehand?
+
     va_end(qubits);
 
     /* Scale the gate to match the size of the combined operand qubits */

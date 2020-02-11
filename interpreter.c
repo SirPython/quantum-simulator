@@ -14,6 +14,7 @@ void interpret(char *in, FILE *out) {
             read_next_gate_exp(&(line_pointers[i]), &gate_exp);
 
             struct Mat *gate = parse_gate(gate_exp);
+            int *operands;
 
             /* I imagine if it's not in the first 3 bytes, it's not there. */
             if(memchr(gate_exp, '(', 3) != NULL) {
