@@ -5,10 +5,22 @@ void Qubit_init(struct Mat *qubit) {
     Mat_set(qubit, 0, 0, 1);
 }
 
-void Qubit_apply(struct Mat *qubit, struct Mat *gate) {
+void Qubit_apply(struct Mat *gate, int num_qubits, ...) {
+    va_list qubits;
     struct Mat scaled_gate;
+    struct Mat combined_qubit = va_arg(qubits, struct Mat);
 
-    if(qubit->rows > 2) { // maybe instead it's if the gate rows and qubit rows don't match? think of cnot and swap
+    for(; num_qubits-1 > 0; num_qubits--) {
+        struct Mat qubit = va_arg(qubits, struct Mat);
+        struct Mat new;
+        Mat_kronecker(&combined_qubit, &qubit, &new);
+
+        combined_qubit = new;
+    }
+
+    va_end(qubits);
+
+    if(qubit->rows > 2) { // TODO maybe instead it's if the gate rows and qubit rows don't match? think of cnot and swap
         struct Mat identity;
         generate_identity(qubit->rows, &identity);
 
@@ -18,7 +30,7 @@ void Qubit_apply(struct Mat *qubit, struct Mat *gate) {
     }
 
     struct Mat output;
-    Mat_dot(qubit, &scaled_gate, &output);
+    Mat_dot(combined_qubit, &scaled_gate, &output);
 
     *qubit = output;
 }

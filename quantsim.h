@@ -7,6 +7,7 @@
 #include <stdbool.h>
 #include <complex.h>
 #include <string.h>
+#include <stdard.h>
 
 #include "mat.h"
 #include "qubit.h"

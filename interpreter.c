@@ -62,18 +62,9 @@ void initialize(char *in, long *num_qubits, struct Mat **qubits, char ***line_po
 // TODO: for this and related functions, there's definitely a more idiomatic
 // way to isolate a SUBSTRING.
 void read_next_gate_exp(char **stream, char **out) {
-    /* Get to the next gate */
-    for(;
-        !IS_GATE(**stream) && !IS_END(**stream);
-        *stream = *stream + 1
-    );
+    SKIP_WHILE(*stream, !IS_GATE(**stream) && !IS_END(**stream))
     char *start = *stream;
-
-    /* Get to the start of the next gate, or the end of the code. */
-    for(;
-        !IS_GATE(**stream) && !IS_END(**stream);
-        *stream = *stream + 1
-    );
+    SKIP_WHILE(*stream, !IS_GATE(**stream) && !IS_END(**stream))
 
     size_t size = (size_t)(*stream - start);
     *out = malloc(size + 1); // +1 for '\0'
@@ -104,7 +95,15 @@ struct Mat *parse_gate(char *gate_exp) {
 }
 
 void parse_operands(char *gate_exp, int **operands) {
+    SKIP_WHILE(gate_exp, *gate_exp != '(')
 
+    while(*gate_exp != ')') {
+        SKIP_WHILE(!IS_NUMBER(*gate_exp), gate_exp)
+
+        int id = (int)strtol(gate_exp, gate_exp, 10);
+
+        // gate_exp++; ??
+    }
 }
 
 void load_file(FILE *fp, char **out) {
