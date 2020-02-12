@@ -18,7 +18,7 @@
  */
 void interpret(char *in, FILE *out);
 
-void initialize(char *in, long *num_qubits, struct Mat **qubits, char ***line_pointers);
+void initialize(char *in, QubitRegister **qregs, char ***line_pointers);
 
 /**
  * Advances *stream to the end of the gate. TODO: maybe copy strol's design

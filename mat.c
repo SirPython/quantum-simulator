@@ -7,6 +7,19 @@ void Mat_init(struct Mat *mat, int rows, int cols) {
     mat->data = malloc(sizeof(double) * rows * cols);
 }
 
+void Mat_init_with_data(struct Mat *mat, int rows, int cols, ...) {
+    Mat_init(mat, rows, cols);
+
+    va_list data;
+    va_start(data, cols);
+
+    for(int i = 0; i < rows * cols; i++) {
+        mat->data[i] = va_arg(data, double);
+    }
+
+    va_end(data);
+}
+
 double Mat_get(struct Mat *mat, int row, int col) {
     return mat->data[(row * mat->cols) + col];
 }

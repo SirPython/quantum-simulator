@@ -1,11 +1,21 @@
 #include "quantsim.h"
 
-void Qubit_init(struct Mat *qubit) {
+void Qubit_init(Qubit *qubit) {
     Mat_init(qubit, 2, 1);
     Mat_set(qubit, 0, 0, 1);
 }
 
-void Qubit_apply(struct Mat *gate, struct Mat *out_qubit, int num_qubits, ...) {
+void Qreg_init(QubitRegister *qreg, int num) {
+    *qreg = malloc(sizeof(Qubit) * num);
+
+    for(; num > 0; num--) {
+        Qubit qubit;
+        Qubit_init(&qubit);
+        (*qreg)[num] = qubit;
+    }
+}
+
+void Qubit_apply(Gate *gate, Qubit *out_qubit, int num_qubits, ...) {
     va_list qubits;
     struct Mat scaled_gate;
     struct Mat combined_qubit = va_arg(qubits, struct Mat);
@@ -39,12 +49,12 @@ void Qubit_apply(struct Mat *gate, struct Mat *out_qubit, int num_qubits, ...) {
     *out_qubit = output;
 }
 
-double Qubit_qmeasure(struct Mat *qubit) {
+double Qubit_qmeasure(Qubit *qubit) {
     double root_zero_odds = Mat_get(qubit, 0, 0);
 
     return root_zero_odds * root_zero_odds;
 }
 
-bool Qubit_cmeasure(struct Mat *qubit) {
+bool Qubit_cmeasure(Qubit *qubit) {
     return rand() >= Qubit_qmeasure(qubit);
 }
