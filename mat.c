@@ -66,6 +66,13 @@ void Mat_kronecker(struct Mat *mat1, struct Mat *mat2, struct Mat *result) {
     }
 }
 
+void Mat_combine(int num, ...) {
+    va_list mats;
+    va_start(mats, num);
+
+    // KRONEKCER EVERYTHING TOGETHER
+}
+
 void Mat_print(struct Mat *mat) {
     for(int i = 0; i < mat->rows; i++) {
         for(int j = 0; j < mat->cols; j++) {

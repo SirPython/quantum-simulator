@@ -16,22 +16,14 @@ void Qreg_init(QubitRegister *qreg, int num) {
 }
 
 void Qubit_apply(Gate *gate, Qubit *out_qubit, int num_qubits, ...) {
-    va_list qubits;
-    struct Mat scaled_gate;
-    struct Mat combined_qubit = va_arg(qubits, struct Mat);
 
-    /* Combine the operand qubits */
-    for(; num_qubits-1 > 0; num_qubits--) {
-        struct Mat qubit = va_arg(qubits, struct Mat);
-        struct Mat new;
-        Mat_kronecker(&combined_qubit, &qubit, &new);
-
-        combined_qubit = new;
-    }
-
-// oh do you decide the length of a register beforehand?
-
-    va_end(qubits);
+    // IN ARE PASSED THE COMBINED GATES FOR THE COLUMN AS WELL AS THE COMBINED
+    // QUBITS FROM THE REGISTER (MAKE A QREG FUNCTION THAT MAKES USE OF THE COMBINE
+    // FUNCTION
+    // IF IT'S AN UNDERSCORE, IT'S THE IDENTITY UNLESS ANOTHER GATE REFERRED
+    // TO IT EXPLICITLY. OR, HOW ABOUT THIS, KNOWING THE SIZE OF EACH GATE,
+    // THE NEXT N QUBITS DOWN ARE THE ASSUMED OPERANDS <-- WILL MAKE CODE
+    // EASIER TO READ
 
     /* Scale the gate to match the size of the combined operand qubits */
     if(combined_qubit.rows > gate->rows) {
