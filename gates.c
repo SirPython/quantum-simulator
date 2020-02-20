@@ -53,6 +53,11 @@ BINARY_GATE(swap,
     0, 0, 0, 1
 );
 
+UNARY_GATE(identity,
+    1, 0,
+    0, 1
+);
+
 struct Mat *gate_lookup(char *gate_str) {
     static struct item {
         char *name;
@@ -65,6 +70,7 @@ struct Mat *gate_lookup(char *gate_str) {
         "Cy", &c_pauli_y,
         "Z", &pauli_z,
         "Cz", &c_pauli_z,
+        "_", &identity
 
         NULL, NULL
     };

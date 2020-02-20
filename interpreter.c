@@ -11,22 +11,21 @@ void interpret(char *in, FILE *out) {
 
         struct Mat combined_gates;
 
+        int operands_expected = 0;
         for(int i = 0; qregs[i] != NULL; i++) {
+            if(operands_expected > 0) {
+                operands_expected--;
+                continue;
+            }
+
             char *gate_exp;
             read_next_gate_exp(&(line_pointers[i]), &gate_exp);
+            struct Mat *gate  = parse_gate(gate_exp);
+            operands_expected = (gate->rows / 2) - 1;
 
-            struct Mat *gate = parse_gate(gate_exp);
             struct Mat new;
             Mat_combine(&combined_gates, gate, &new);
             combined_gates = new;
-
-        }
-
-        /* If any of the lines have no more symbols encountered (whether thats
-         * a gate or simply a placeholder _ ), then it can be assumed the
-         * program has ended. */
-        if(strcmp((gates)[0], "")) { // can this be shortened?
-            break;
         }
     }
 
