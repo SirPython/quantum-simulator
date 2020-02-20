@@ -30,7 +30,6 @@ void initialize(char *in, QubitRegister **qregs, char ***line_pointers);
 void read_next_gate_exp(char **stream, char **out);
 
 struct Mat *parse_gate(char *gate_exp);
-void parse_operands(char *gate_exp, int **operands);
 
 void load_file(FILE *fp, char **out);
 

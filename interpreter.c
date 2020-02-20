@@ -5,21 +5,21 @@ void interpret(char *in, FILE *out) {
     char **line_pointers;
     initialize(in, &qregs, &line_pointers);
 
-    /* Will hold each column's gates as they are encountered */
-    char **gates;
     while(1) {
+        struct Mat combined_register;
+        Mat_combine(qregs, &combined_register);
+
+        struct Mat combined_gates;
+
         for(int i = 0; qregs[i] != NULL; i++) {
             char *gate_exp;
             read_next_gate_exp(&(line_pointers[i]), &gate_exp);
 
             struct Mat *gate = parse_gate(gate_exp);
-            int *operands;
+            struct Mat new;
+            Mat_combine(&combined_gates, gate, &new);
+            combined_gates = new;
 
-            /* I imagine if it's not in the first 3 bytes, it's not there. */
-            if(memchr(gate_exp, '(', 3) != NULL) {
-                int *operands;
-                parse_operands(gate_exp, &operands);
-            }
         }
 
         /* If any of the lines have no more symbols encountered (whether thats
@@ -101,19 +101,6 @@ struct Mat *parse_gate(char *gate_exp) {
      }
 
      return gate_lookup(gate_str);
-}
-
-void parse_operands(char *gate_exp, int **operands) {
-    SKIP_WHILE(gate_exp, *gate_exp != '(')
-
-    /* First number in argument list is # of arguments */
-    int num_operands = (int)strtol(gate_exp, &gate_exp, 10); // TODO don't need this
-    *operands = malloc(sizeof(int) * num_operands);
-
-    for(int i = 0; i < num_operands; i++) {
-        SKIP_WHILE(gate_exp, !IS_NUMBER(*gate_exp))
-        (*operands)[i] = (int)strtol(gate_exp, &gate_exp, 10);
-    }
 }
 
 void load_file(FILE *fp, char **out) {
