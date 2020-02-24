@@ -5,10 +5,10 @@ void interpret(char *in, FILE *out) {
     char **line_pointers;
     initialize(in, &qubits, &line_pointers);
 
-    while(1) {
-        struct Mat combined_qubits;
-        Mat_combine(&qubits, &combined_qubits);
+    struct Mat combined_qubits;
+    Mat_combine(&qubits, &combined_qubits);
 
+    while(1) {
         struct Mat combined_gates;
 
         int operands_expected = 0;
@@ -28,6 +28,10 @@ void interpret(char *in, FILE *out) {
             Mat_combine((struct Mat *[]) {&combined_gates, gate}, &new);
             combined_gates = new;
         }
+
+        struct Mat new;
+        Mat_dot(&combined_gates, &combined_qubits, &new); // right order?
+        combined_qubits = new;
     }
     // TODO free memory
 }
