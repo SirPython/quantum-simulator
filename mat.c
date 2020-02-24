@@ -1,5 +1,7 @@
 #include "quantsim.h"
 
+struct Mat ARRAY_END = {0};
+
 void Mat_init(struct Mat *mat, int rows, int cols) {
     mat->rows = rows;
     mat->cols = cols;
@@ -67,11 +69,11 @@ void Mat_kronecker(struct Mat *mat1, struct Mat *mat2, struct Mat *result) {
 }
 
 void Mat_combine(struct Mat **mats, struct Mat *out) {
-    *out = (*mats)[0]
+    *out = (*mats)[0];
 
-    for(int i = 0; (*mats)[i] != NULL; i++) {
+    for(int i = 0; mats[i] != NULL; i++) {
         struct Mat new;
-        Mat_kronecker(out, (*mats)[i], &new);
+        Mat_kronecker(out, mats[i], &new);
 
         *out = new;
     }

@@ -70,7 +70,7 @@ struct Mat *gate_lookup(char *gate_str) {
         "Cy", &c_pauli_y,
         "Z", &pauli_z,
         "Cz", &c_pauli_z,
-        "_", &identity
+        "_", &identity,
 
         NULL, NULL
     };

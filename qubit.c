@@ -5,17 +5,7 @@ void Qubit_init(Qubit *qubit) {
     Mat_set(qubit, 0, 0, 1);
 }
 
-void Qreg_init(QubitRegister *qreg, int num) {
-    *qreg = malloc(sizeof(Qubit) * num);
-
-    for(; num > 0; num--) {
-        Qubit qubit;
-        Qubit_init(&qubit);
-        (*qreg)[num] = qubit;
-    }
-}
-
-void Qubit_apply(Gate *gate, Qubit *out_qubit, int num_qubits, ...) {
+/*void Qubit_apply(Gate *gate, Qubit *out_qubit, int num_qubits, ...) {
 
     // IN ARE PASSED THE COMBINED GATES FOR THE COLUMN AS WELL AS THE COMBINED
     // QUBITS FROM THE REGISTER (MAKE A QREG FUNCTION THAT MAKES USE OF THE COMBINE
@@ -25,7 +15,7 @@ void Qubit_apply(Gate *gate, Qubit *out_qubit, int num_qubits, ...) {
     // THE NEXT N QUBITS DOWN ARE THE ASSUMED OPERANDS <-- WILL MAKE CODE
     // EASIER TO READ
 
-    /* Scale the gate to match the size of the combined operand qubits */
+    Scale the gate to match the size of the combined operand qubits
     if(combined_qubit.rows > gate->rows) {
         struct Mat identity;
         generate_identity(combined_qubit.rows, &identity);
@@ -39,7 +29,7 @@ void Qubit_apply(Gate *gate, Qubit *out_qubit, int num_qubits, ...) {
     Mat_dot(&combined_qubit, &scaled_gate, &output);
 
     *out_qubit = output;
-}
+}*/
 
 double Qubit_qmeasure(Qubit *qubit) {
     double root_zero_odds = Mat_get(qubit, 0, 0);

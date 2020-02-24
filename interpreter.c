@@ -1,18 +1,19 @@
 #include "quantsim.h"
 
 void interpret(char *in, FILE *out) {
-    QubitRegister *qregs;
+    Qubit *qubits;
     char **line_pointers;
-    initialize(in, &qregs, &line_pointers);
+    initialize(in, &qubits, &line_pointers);
 
     while(1) {
-        struct Mat combined_register;
-        Mat_combine(qregs, &combined_register);
+        struct Mat combined_qubits;
+        Mat_combine(&qubits, &combined_qubits);
 
         struct Mat combined_gates;
 
         int operands_expected = 0;
-        for(int i = 0; qregs[i] != NULL; i++) {
+        /* rows = 0 signifies ARRAY_END matrix */
+        for(int i = 0; qubits[i].rows != 0; i++) {
             if(operands_expected > 0) {
                 operands_expected--;
                 continue;
@@ -24,46 +25,38 @@ void interpret(char *in, FILE *out) {
             operands_expected = (gate->rows / 2) - 1;
 
             struct Mat new;
-            Mat_combine(&combined_gates, gate, &new);
+            Mat_combine((struct Mat *[]) {&combined_gates, gate}, &new);
             combined_gates = new;
         }
     }
-
     // TODO free memory
 }
 
-void initialize(char *in, QubitRegister **qregs, char ***line_pointers) {
+void initialize(char *in, Qubit **qubits, char ***line_pointers) {
     /* First # is # of qubits */
-    long num_regs = strtol(in, &in, 10); // I LOVE this function
+    long num_qubits = strtol(in, &in, 10); // I LOVE this function
 
-    /* +1 b/c the last element will be null to denote the end */
-    *qregs = malloc(sizeof(QubitRegister) * (num_regs+1)); // TODO go through and make sure you doing things like this where you dont' create extra blocks of memroy within funcitons
-
-    int num_lines = 0;
-    for(int i = 0; i < num_regs; i++) {
-        /* Next # is size of qreg */
-        long size = strtol(in, &in, 10);
-
-        QubitRegister qreg;
-        Qreg_init(&qreg, size);
-        (*qregs)[i] = qreg;
-
-        num_lines += size;
-    }
-    qregs[num_regs] = NULL;
-
-    *line_pointers = malloc(num_lines * sizeof(char *));
+    *qubits        = malloc((num_qubits + 1) * sizeof(Qubit));
+    *line_pointers = malloc(num_qubits * sizeof(char *));
 
     int i = 0;
     /* We iterate through the string as opposed to just initializing 5 qubits
      * because we need the line_pointers to point to the start of each line. */
     while(*in != '\0') {
         if(*in == '\n') {
+            struct Mat qubit;
+            Qubit_init(&qubit);
+            (*qubits)[i] = qubit;
+
             (*line_pointers)[i] = in;
+
             i++;
         }
         in++;
     }
+
+    extern struct Mat ARRAY_END;
+    (*qubits)[num_qubits] = ARRAY_END;
 }
 
 

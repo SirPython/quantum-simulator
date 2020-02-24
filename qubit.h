@@ -4,7 +4,6 @@
 #include "quantsim.h"
 
 typedef struct Mat Qubit;
-typedef struct Mat * QubitRegister;
 
 /**
  * A qubit (? or qubit register?) is just a vector.
@@ -14,8 +13,6 @@ typedef struct Mat * QubitRegister;
  * Initializes to a 0 state
  */
 void Qubit_init(Qubit *qubit);
-
-void Qreg_init(QubitRegister *qreg, int num);
 
 /**
  * Apply a gate to a qubit/qubit register?
